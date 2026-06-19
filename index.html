@@ -28,6 +28,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 72px;
         }
 
         body {
@@ -37,12 +38,20 @@
             line-height: 1.7;
         }
 
+        body.menu-open {
+            overflow: hidden;
+        }
+
         img {
             max-width: 100%;
         }
 
         a {
             text-decoration: none;
+        }
+
+        button {
+            font: inherit;
         }
 
         .container {
@@ -112,8 +121,31 @@
             transition: 0.25s ease;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
             color: #5ea0ff;
+        }
+
+        /* Hidden on desktop */
+        .mobile-menu-button {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 0;
+            border-radius: 7px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .mobile-menu-button span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            margin: 5px 0;
+            border-radius: 2px;
+            background: #ffffff;
+            transition: transform 0.25s ease, opacity 0.25s ease;
         }
 
         /* =====================================================
@@ -535,7 +567,7 @@
         }
 
         /* =====================================================
-           MOBILE
+           TABLET
         ===================================================== */
 
         @media (max-width: 900px) {
@@ -554,7 +586,15 @@
             }
         }
 
+        /* =====================================================
+           PHONE
+        ===================================================== */
+
         @media (max-width: 650px) {
+            html {
+                scroll-padding-top: 64px;
+            }
+
             .section {
                 padding: 65px 0;
             }
@@ -564,11 +604,77 @@
             }
 
             .nav-container {
+                position: relative;
                 min-height: 64px;
             }
 
+            .mobile-menu-button {
+                display: block;
+                position: relative;
+                z-index: 1002;
+            }
+
             .nav-links {
-                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                z-index: 1001;
+
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+
+                padding: 10px 0;
+                background: rgba(10, 25, 47, 0.99);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 14px 25px rgba(0, 0, 0, 0.22);
+
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                pointer-events: none;
+
+                transition:
+                    opacity 0.25s ease,
+                    transform 0.25s ease,
+                    visibility 0.25s ease;
+            }
+
+            .nav-links.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+                padding: 13px 22px;
+                font-size: 15px;
+            }
+
+            .nav-links a:hover,
+            .nav-links a:focus-visible {
+                background: rgba(94, 160, 255, 0.12);
+            }
+
+            .mobile-menu-button.active span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+
+            .mobile-menu-button.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-button.active span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
             }
 
             .hero {
@@ -577,6 +683,10 @@
 
             .hero-content {
                 padding: 90px 0;
+            }
+
+            .hero h1 {
+                font-size: 42px;
             }
 
             .hero-description {
@@ -612,11 +722,23 @@
     <nav class="navbar">
         <div class="container nav-container">
 
-            <a class="logo" href="#home">
+            <a class="logo" href="#home" aria-label="Go to homepage">
                 <span>RX</span>
             </a>
 
-            <ul class="nav-links">
+            <button
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="primary-navigation"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="primary-navigation">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -651,8 +773,8 @@
                 </div>
 
                 <p class="hero-description">
-                    Hands-on experience in developing and deploying Magento 2 
-                    eCommerce platforms, customizing responsive user interfaces, 
+                    Hands-on experience in developing and deploying Magento 2
+                    eCommerce platforms, customizing responsive user interfaces,
                     configuring web servers and building practical AI and data-processing tools.
                 </p>
 
@@ -904,9 +1026,9 @@
                         <h3>Magento 2 eCommerce Platform</h3>
 
                         <p>
-                            Independently developed and deployed a complete Magento 2 
-                            eCommerce environment for a welding and industrial hardware 
-                            supplier. Customized the Porto theme, responsive layouts, 
+                            Independently developed and deployed a complete Magento 2
+                            eCommerce environment for a welding and industrial hardware
+                            supplier. Customized the Porto theme, responsive layouts,
                             product pages, homepage sections and customer portal.
                         </p>
 
@@ -1028,11 +1150,11 @@
                     </div>
 
                     <p>
-                    Independently built and launched a Magento 2 eCommerce platform from the ground
-                    up, handling the full development lifecycle including server configuration, Magento
-                    installation, Porto theme customization, responsive frontend development, search
-                    optimization, website migration, SEO implementation, security configuration and
-                    AI chatbot integration.
+                        Independently built and launched a Magento 2 eCommerce platform from the ground
+                        up, handling the full development lifecycle including server configuration, Magento
+                        installation, Porto theme customization, responsive frontend development, search
+                        optimization, website migration, SEO implementation, security configuration and
+                        AI chatbot integration.
                     </p>
                 </article>
 
@@ -1074,17 +1196,27 @@
                         Completed projects involving software development,
                         data mining, cloud computing, databases, networking,
                         IoT projects, mobile applications and human-computer
-                        interaction.<br><br>
+                        interaction.
+                    </p>
 
-                        <div class="timeline-company">1. Smart Home System (IoT Project | C++ and PHP)</div>
-                        The home environment situation will be collected from sensors, then 
-                        send to website for real-time monitoring and data analysis purpose.<br><br>
-                        <div class="timeline-company">2. Employee Monitoring System (AIoT Project | Python and PHP)</div>
-                        Using Raspberry Pi and Pi Camera to capture employee behavior by 
-                        identify worker face and motion detect such as using phone. This 
-                        system will assist organization to improve workplace safety and 
-                        increase productivity. All collected data will send to website for real
-                        time monitoring and data analysis purpose.  
+                    <div class="timeline-company">
+                        1. Smart Home System (IoT Project | C++ and PHP)
+                    </div>
+
+                    <p>
+                        The home environment situation will be collected from sensors, then
+                        sent to a website for real-time monitoring and data analysis.
+                    </p>
+
+                    <div class="timeline-company">
+                        2. Employee Monitoring System (AIoT Project | Python and PHP)
+                    </div>
+
+                    <p>
+                        Used Raspberry Pi and a Pi Camera to capture employee behaviour by
+                        identifying worker faces and detecting motion such as phone usage.
+                        The system was designed to support workplace safety and productivity.
+                        Collected data was sent to a website for real-time monitoring and analysis.
                     </p>
                 </article>
 
@@ -1113,7 +1245,7 @@
                 <h3>Let’s connect</h3>
 
                 <p>
-                WhatsApp:+65 80731563
+                    WhatsApp: +65 8073 1563
                 </p>
 
                 <div class="contact-links">
@@ -1157,6 +1289,61 @@
     <footer>
         © 2026 WONG RONG XIN. Personal Portfolio Website.
     </footer>
+
+    <!-- =====================================================
+         MOBILE MENU SCRIPT
+    ====================================================== -->
+
+    <script>
+        const menuButton = document.querySelector('.mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+        const menuLinks = document.querySelectorAll('.nav-links a');
+
+        function closeMobileMenu() {
+            navLinks.classList.remove('active');
+            menuButton.classList.remove('active');
+            menuButton.setAttribute('aria-expanded', 'false');
+            menuButton.setAttribute('aria-label', 'Open navigation menu');
+            document.body.classList.remove('menu-open');
+        }
+
+        menuButton.addEventListener('click', function () {
+            const isOpen = navLinks.classList.toggle('active');
+
+            menuButton.classList.toggle('active', isOpen);
+            menuButton.setAttribute('aria-expanded', String(isOpen));
+            menuButton.setAttribute(
+                'aria-label',
+                isOpen ? 'Close navigation menu' : 'Open navigation menu'
+            );
+            document.body.classList.toggle('menu-open', isOpen);
+        });
+
+        menuLinks.forEach(function (link) {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        document.addEventListener('click', function (event) {
+            const clickedInsideNavigation =
+                event.target.closest('.nav-container');
+
+            if (!clickedInsideNavigation && navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 650) {
+                closeMobileMenu();
+            }
+        });
+    </script>
 
 </body>
 </html>
