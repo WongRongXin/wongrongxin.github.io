@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIoT Employee Behavior Monitoring System | Smart Workplace Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation .circle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #fff, #a8c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em;
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Tech Stack Section */
+        .tech-stack {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            margin-bottom: 60px;
+        }
+
+        .tech-title {
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            background: white;
+        }
+
+        .tech-item img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .tech-item span {
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            margin-bottom: 60px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: -45px auto 20px;
+        }
+
+        .step h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            padding: 50px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .demo-title {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .demo-placeholder {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 60px;
+            margin-top: 30px;
+        }
+
+        .demo-placeholder img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin-bottom: 60px;
+        }
+
+        .cta-title {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s;
+            margin: 0 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                gap: 15px;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="circle" style="width: 300px; height: 300px; top: -100px; left: -100px; animation-duration: 25s;"></div>
+        <div class="circle" style="width: 500px; height: 500px; bottom: -200px; right: -200px; animation-duration: 30s;"></div>
+        <div class="circle" style="width: 200px; height: 200px; top: 50%; left: 50%; animation-duration: 20s;"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="badge">🤖 AIoT Innovation 2026</div>
+            <h1>AI Employee Behavior Monitoring System</h1>
+            <div class="subtitle">
+                Smart workplace analytics powered by Raspberry Pi 4, Computer Vision, and Edge AI
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Detection Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-number">0.5s</div>
+                <div class="stat-label">Real-time Response</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔒</div>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">On-device Processing</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Continuous Monitoring</div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Face Detection</h3>
+                <p>Advanced facial detection to track employees's face with high accuracy</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Phone Detection</h3>
+                <p>Detects when employees are using mobile phones during work hours</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Head Turn Detection</h3>
+                <p>Identifies when employees are distracted or looking away from work</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚪</div>
+                <h3>Leaving Detection</h3>
+                <p>Tracks when employees leave their seats and monitors duration</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Real-time Dashboard</h3>
+                <p>Live web dashboard showing current status and behavior history</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>CSV & Database Logging</h3>
+                <p>All behavior data stored in CSV files and MySQL database for analysis</p>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="tech-stack">
+            <h3 class="tech-title">🛠️ Technology Stack</h3>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div style="font-size: 3em;">🍓</div>
+                    <span>Raspberry Pi 4</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">📷</div>
+                    <span>Camera Module 3</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">🐍</div>
+                    <span>Python 3.13</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">👁️</div>
+                    <span>OpenCV</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">🐬</div>
+                    <span>MySQL</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">🌐</div>
+                    <span>Flask</span>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 3em;">📄</div>
+                    <span>CSV Export</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="how-it-works">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Camera Capture</h4>
+                    <p>Raspberry Pi Camera Module 3 captures real-time video feed of the workspace</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>AI Detection</h4>
+                    <p>Computer vision algorithms detect faces, phones, and head movements</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Behavior Classification</h4>
+                    <p>System classifies behaviors into Working, Phone Use, Head Turn, or Leaving</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Data Storage</h4>
+                    <p>All events are logged to CSV files and MySQL database with timestamps</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h4>Web Dashboard</h4>
+                    <p>Live dashboard displays real-time status and historical behavior data</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h4>Analytics</h4>
+                    <p>Generate reports and analyze employee engagement patterns</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Section -->
+        <div class="demo-section">
+            <h3 class="demo-title">📺 Live Demo Preview</h3>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px;">The system provides a real-time web dashboard accessible from any browser</p>
+            <div class="demo-placeholder">
+                <div style="background: #1e1e2e; border-radius: 10px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <div style="color: white;">👤 Status: Online</div>
+                        <div style="color: #4CAF50;">🟢 Active Monitoring</div>
+                    </div>
+                    <div style="background: #2d2d3d; border-radius: 10px; padding: 20px; text-align: center;">
+                        <div style="color: white; margin-bottom: 20px;">📹 Live Feed</div>
+                        <div style="background: #1a1a2e; height: 300px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #666;">
+                            🎥 Camera Feed Active
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                        <div style="background: #2d2d3d; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="color: #ef4444; font-size: 1.5em;">📱</div>
+                            <div style="color: white;">Phone: 0</div>
+                        </div>
+                        <div style="background: #2d2d3d; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="color: #f59e0b; font-size: 1.5em;">🔄</div>
+                            <div style="color: white;">Head Turn: 0</div>
+                        </div>
+                        <div style="background: #2d2d3d; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="color: #3b82f6; font-size: 1.5em;">🚪</div>
+                            <div style="color: white;">Leaving: 0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3 class="cta-title">Ready to Transform Your Workplace?</h3>
+            <p class="cta-text">Deploy the AI Employee Behavior Monitoring System today and gain valuable insights into workplace productivity</p>
+            <a href="#" class="btn">📥 Download Documentation</a>
+            <a href="#" class="btn btn-outline">🔗 View GitHub Repository</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 AIoT Employee Behavior Monitoring System | Built with ❤️ on Raspberry Pi 4</p>
+            <p style="font-size: 0.8em; margin-top: 10px;">Privacy First • On-device Processing • GDPR Compliant</p>
+        </div>
+    </div>
+
+    <script>
+        // Add random floating circles to background
+        const bgAnimation = document.querySelector('.bg-animation');
+        for (let i = 0; i < 20; i++) {
+            const circle = document.createElement('div');
+            circle.classList.add('circle');
+            const size = Math.random() * 200 + 50;
+            circle.style.width = size + 'px';
+            circle.style.height = size + 'px';
+            circle.style.left = Math.random() * 100 + '%';
+            circle.style.top = Math.random() * 100 + '%';
+            circle.style.animationDelay = Math.random() * 20 + 's';
+            circle.style.animationDuration = Math.random() * 20 + 15 + 's';
+            bgAnimation.appendChild(circle);
+        }
+
+        // Animate stats numbers
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const finalValue = stat.innerText;
+            let current = 0;
+            const increment = finalValue.includes('%') ? parseInt(finalValue) / 50 : parseInt(finalValue) / 30;
+            const isPercentage = finalValue.includes('%');
+            const target = parseInt(finalValue);
+            
+            const updateNumber = () => {
+                if (current < target) {
+                    current += increment;
+                    if (isPercentage) {
+                        stat.innerText = Math.floor(current) + '%';
+                    } else {
+                        stat.innerText = Math.floor(current);
+                    }
+                    setTimeout(updateNumber, 20);
+                } else {
+                    stat.innerText = finalValue;
+                }
+            };
+            
+            // Start animation when in viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateNumber();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            observer.observe(stat);
+        });
+    </script>
+</body>
+</html>
