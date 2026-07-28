@@ -492,14 +492,28 @@
             margin-bottom: 4px;
         }
 
+        .timeline-item p {
+            color: #64748b;
+        }
+
         .timeline-company {
             color: #526477;
             font-weight: 600;
             margin-bottom: 12px;
+            margin:15px 0;
         }
 
-        .timeline-item p {
-            color: #64748b;
+        .timeline-company img{
+            width:250px;
+            border-radius:10px;
+            border:1px solid #ddd;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .timeline-company img:hover{
+            transform:scale(1.03);
+            box-shadow:0 10px 20px rgba(0,0,0,.15);
         }
 
         /* =====================================================
@@ -1213,7 +1227,8 @@
                     </p>
 
                     <div class="timeline-company">
-                        1. Smart Home System (IoT Project | C++ and PHP) <a href="IoT_SmartHome.jpeg"> // Project Image</a>
+                        1. Smart Home System (IoT Project | C++ and PHP) 
+                        <a href="IoT_SmartHome.jpeg"> // Project Image</a> <img src="IoT_SmartHome.jpeg">
                     </div>
 
                     <p>
@@ -1223,8 +1238,8 @@
                     </p>
 
                     <div class="timeline-company">
-                        2. Employee Monitoring System (AIoT Project | Python and PHP)<br> <a href="IoT_EMS.jpeg"> // Project Image</a>
-                        <a href="FypIntroWeb.html"> // Project Intro Poster</a>
+                        2. Employee Monitoring System (AIoT Project | Python and PHP) <a href="IoT_EMS.jpeg"> // Project Image</a><br>
+                        <a href="FypIntroWeb.html"> // Project Intro Poster</a> <img src="IoT_EMS.jpeg">
                     </div>
                     
                     <p>
